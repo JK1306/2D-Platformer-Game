@@ -223,7 +223,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.015778601, y: 1.0123255}
+  m_Offset: {x: -0.0015161335, y: 0.9600604}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.42, y: 0.1}
@@ -234,7 +234,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5981107, y: 2.070683}
+  m_Size: {x: 0.5635212, y: 2.0906677}
   m_EdgeRadius: 0
 --- !u!114 &570575220
 MonoBehaviour:
@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 953169188}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: FloorTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
