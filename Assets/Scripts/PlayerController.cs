@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
             transform.localPosition = playerPosition;
         }
         if((verticalForce > 0) && !(inAir)){
-            Debug.Log("Force has been applied");
             rb2d.AddForce(new Vector2(0,jump), ForceMode2D.Force);
             inAir = true;
         }
@@ -74,9 +73,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             playerAnimator.SetBool("crouch", true);
-            // Debug.Log("BoxY Value :"+boxY);
-            // Debug.Log("BoxY Value :"+(boxY*0.5f));
-            // Debug.Log("BoxY : "+(boxY * 0.5f)/2);
             boxCollider.offset = new Vector2(boxCollider.offset.x, (boxY * 0.5f) / 2);
             boxCollider.size = new Vector2(boxCollider.size.x, boxY * 0.5f);
         }
