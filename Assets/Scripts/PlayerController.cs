@@ -94,6 +94,15 @@ public class PlayerController : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D colObj){
-        SceneManager.LoadScene("Level2");
+        Scene currentScene = SceneManager.GetActiveScene();
+        
+        if(colObj.gameObject.tag == "SceneEnd")
+            SceneManager.LoadScene(currentScene.buildIndex+1);
+
+        if(colObj.gameObject.name == "DeadEnd"){
+            playerAnimator.SetBool("jump",false);
+            playerAnimator.SetBool("dead",true);
+            SceneManager.LoadScene(currentScene.name);
+        }
     }
 }
