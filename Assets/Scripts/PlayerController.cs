@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
         }
         if((verticalForce > 0) && !(inAir)){
             rb2d.AddForce(new Vector2(0,jump), ForceMode2D.Force);
+            // rb2d.velocity = Vector2.up * jump;
             inAir = true;
         }
 
@@ -86,7 +88,12 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.tag == "FloorTile"){
+            Debug.Log("Hit in Ground !!");
             inAir = false;
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D colObj){
+        SceneManager.LoadScene("Level2");
     }
 }
