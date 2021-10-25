@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,7 +8,9 @@ public class PlayerController : MonoBehaviour
 {
     public float speed, jump;
     public Animator playerAnimator;
+    public ScoreBoardController scoreBoard;
     float offsetY, boxY;
+    int score=0;
     bool inAir = false;
     Rigidbody2D rb2d;
     BoxCollider2D boxCollider;
@@ -19,6 +22,12 @@ public class PlayerController : MonoBehaviour
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         boxY = boxCollider.size.y;
         offsetY = boxCollider.offset.y;
+    }
+
+    public void addScore()
+    {
+        score += 10;
+        scoreBoard.dispScore(score);
     }
 
     // Update is called once per frame
@@ -88,7 +97,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.tag == "FloorTile"){
-            Debug.Log("Hit in Ground !!");
+            // Debug.Log("Hit in Ground !!");
             inAir = false;
         }
     }
