@@ -3,14 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public float speed, jump;
     public Animator playerAnimator;
     public ScoreBoardController scoreBoard;
+    public Image[] playerHealth;
     float offsetY, boxY;
     int score=0;
+    int playerHealthSize;
     bool inAir = false;
     Rigidbody2D rb2d;
     BoxCollider2D boxCollider;
@@ -22,11 +25,23 @@ public class PlayerController : MonoBehaviour
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         boxY = boxCollider.size.y;
         offsetY = boxCollider.offset.y;
+        playerHealthSize = playerHealth.Length;
+        // print("Player Health Len : "+playerHealth.Length);
+    }
+
+    IEnumerator PlayerDeathAnimation(){
+        playerAnimator.SetBool("dead",true);
+        yield return new WaitForSeconds(4);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void KillPlayer()
     {
-        Destroy(gameObject);
+        playerHealthSize--;
+        Destroy(playerHealth[playerHealthSize]);
+        if(playerHealthSize==0){
+            StartCoroutine(PlayerDeathAnimation());
+        }
     }
 
     public void addScore()
