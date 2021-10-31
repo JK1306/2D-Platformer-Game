@@ -41,7 +41,7 @@ Camera:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -113,7 +113,7 @@ Transform:
   m_GameObject: {fileID: 4705566830932501746}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.637, y: -0.458, z: 0}
-  m_LocalScale: {x: 1.4038066, y: 1.4038066, z: 1.4038066}
+  m_LocalScale: {x: 1.403807, y: 1.403807, z: 1.4038066}
   m_Children:
   - {fileID: 519420032}
   m_Father: {fileID: 0}
@@ -251,3 +251,7 @@ MonoBehaviour:
   jump: 250
   playerAnimator: {fileID: 570575219}
   scoreBoard: {fileID: 0}
+  playerHealth:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
