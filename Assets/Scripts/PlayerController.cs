@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float speed, jump;
     public Animator playerAnimator;
     public ScoreBoardController scoreBoard;
+    public GameOverController gameOver;
     public Image[] playerHealth;
     float offsetY, boxY;
     int score=0;
@@ -26,19 +27,21 @@ public class PlayerController : MonoBehaviour
         boxY = boxCollider.size.y;
         offsetY = boxCollider.offset.y;
         playerHealthSize = playerHealth.Length;
-        // print("Player Health Len : "+playerHealth.Length);
     }
 
     IEnumerator PlayerDeathAnimation(){
         playerAnimator.SetBool("dead",true);
-        yield return new WaitForSeconds(4);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        yield return new WaitForSeconds(3);
+        gameOver.gameObject.SetActive(true);
+        this.enabled = false;
     }
 
     public void KillPlayer()
     {
-        playerHealthSize--;
-        Destroy(playerHealth[playerHealthSize]);
+        if(playerHealthSize!=0){
+            playerHealthSize--;
+            Destroy(playerHealth[playerHealthSize]);
+        }
         if(playerHealthSize==0){
             StartCoroutine(PlayerDeathAnimation());
         }
