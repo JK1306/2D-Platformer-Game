@@ -24,6 +24,11 @@ public class PlayerController : MonoBehaviour
         offsetY = boxCollider.offset.y;
     }
 
+    public void KillPlayer()
+    {
+        Destroy(gameObject);
+    }
+
     public void addScore()
     {
         score += 10;
