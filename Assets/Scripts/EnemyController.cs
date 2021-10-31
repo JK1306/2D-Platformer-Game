@@ -76,10 +76,9 @@ public class EnemyController : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D collision){
-        // Debug.Log(collision.gameObject.tag);
         if(collision.gameObject.GetComponent<PlayerController>() != null){
             player = collision.gameObject.GetComponent<PlayerController>();
-            // player.KillPlayer();
+            player.KillPlayer();
         }
     }
 }
