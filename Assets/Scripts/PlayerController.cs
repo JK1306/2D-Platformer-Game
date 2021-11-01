@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator PlayerDeathAnimation(){
         playerAnimator.SetBool("dead",true);
         yield return new WaitForSeconds(3);
-        gameOver.gameObject.SetActive(true);
+        gameOver.EnableGameObject();
         this.enabled = false;
     }
 

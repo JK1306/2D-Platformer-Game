@@ -6,20 +6,24 @@ using UnityEngine.UI;
 
 public class GameOverController : MonoBehaviour
 {
-    public Button restartBtn, quitBtn;
+    public Button restartBtn, lobbyBtn;
     // Start is called before the first frame update
     void Start()
     {
         restartBtn.onClick.AddListener(RestartScene);
-        quitBtn.onClick.AddListener(QuitSene);
+        lobbyBtn.onClick.AddListener(ReturnLobbySene);
+    }
+
+    public void EnableGameObject(){
+        gameObject.SetActive(true);
     }
 
     // Update is called once per frame
     void RestartScene(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    void QuitSene(){
-        Debug.Log("Not Implemented !!");
+    void ReturnLobbySene(){
+        SceneManager.LoadScene("LobbyScene");
     }
 }

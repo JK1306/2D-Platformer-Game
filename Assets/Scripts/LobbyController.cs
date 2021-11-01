@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class LobbyController : MonoBehaviour
 {
     public Button playBtn, quitBtn;
+    public GameObject levelPopUp;
     void Start()
     {
         playBtn.onClick.AddListener(LoadGameScene);        
@@ -15,6 +16,6 @@ public class LobbyController : MonoBehaviour
 
     private void LoadGameScene()
     {
-        SceneManager.LoadScene(1);
+        levelPopUp.SetActive(true);
     }
 }
