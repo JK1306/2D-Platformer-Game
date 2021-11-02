@@ -120,21 +120,14 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.tag == "FloorTile"){
-            // Debug.Log("Hit in Ground !!");
             inAir = false;
         }
     }
 
-    void OnTriggerEnter2D(Collider2D colObj){
-        Scene currentScene = SceneManager.GetActiveScene();
+    // void OnTriggerEnter2D(Collider2D colObj){
+    //     // Scene currentScene = SceneManager.GetActiveScene();
         
-        if(colObj.gameObject.tag == "SceneEnd")
-            SceneManager.LoadScene(currentScene.buildIndex+1);
-
-        if(colObj.gameObject.name == "DeadEnd"){
-            playerAnimator.SetBool("jump",false);
-            playerAnimator.SetBool("dead",true);
-            SceneManager.LoadScene(currentScene.name);
-        }
-    }
+    //     // if(colObj.gameObject.tag == "SceneEnd")
+    //     //     SceneManager.LoadScene(currentScene.buildIndex+1);
+    // }
 }

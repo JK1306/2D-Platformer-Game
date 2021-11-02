@@ -1,24 +1,63 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
 public class LevelManager : MonoBehaviour
 {
-    public string LevelName;
-    Button levelBtn;
-    // Start is called before the first frame update
-    void Start()
-    {
-        levelBtn = gameObject.GetComponent<Button>();
-        levelBtn.onClick.AddListener(ScitchLevel);
+    private static LevelManager instance;
+    public string[] levels;
+    public static LevelManager Instance{
+        get{
+            return instance;
+        }
     }
 
-    private void ScitchLevel()
-    {
-        SceneManager.LoadScene(LevelName);
+    void Awake(){
+        if(instance == null){
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            // PlayerPrefs.DeleteAll();
+        }else{
+            Destroy(gameObject);
+        }
+    }
+
+    void Start(){
+        if(GetLevelStatus(levels[0]) == LevelStatus.Locked){
+            SetLevelStatus(levels[0], LevelStatus.Open);
+        }
+    }
+
+    public void CompleteCurrentUnLockLevel(string levelName){
+        Scene currentScene = SceneManager.GetSceneByName(levelName);
+        int currentBuildIndex = Array.IndexOf(levels, levelName);
+        int nextSceneIndex = currentBuildIndex+1;
+        if( nextSceneIndex != levels.Length){
+            SetLevelStatus(levels[nextSceneIndex], LevelStatus.Open);
+        }
+        // Debug.Log(currentScene.name);
+        // Debug.Log(currentBuild);
+        // Debug.Log(levelName);
+        // Debug.Log("Next Scene : "+SceneManager.GetSceneByBuildIndex(currentBuild+1).name);
+        // Debug.Log(SceneUtility.GetScenePathByBuildIndex(currentBuild+1));
+    }
+
+    public string GetNextLevel(string levelName){
+        int currentBuildIndex = Array.IndexOf(levels, levelName);
+        int nextSceneIndex = currentBuildIndex+1;
+        if( nextSceneIndex != levels.Length){
+            return levels[nextSceneIndex];
+        }else{
+            return "None";
+        }
+    }
+
+    public void SetLevelStatus(string levelName, LevelStatus lvlStatus){
+        PlayerPrefs.SetInt(levelName, (int)lvlStatus);
+    }
+
+    public LevelStatus GetLevelStatus(string levelName){
+        Debug.Log("Level "+levelName+" is : "+(LevelStatus)PlayerPrefs.GetInt(levelName, 0));
+        return (LevelStatus)PlayerPrefs.GetInt(levelName, 0);
     }
 }
