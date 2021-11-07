@@ -11,39 +11,58 @@ public class PlayerController : MonoBehaviour
     public Animator playerAnimator;
     public ScoreBoardController scoreBoard;
     public GameOverController gameOver;
-    public Image[] playerHealth;
+    public bool isAlive = true;
+    public Image[] playerHealthImage;
+    int playerHealthLength;
+    static bool sceneLoaded = false;
+    static int playerHealth;
     float offsetY, boxY;
     int score=0;
-    int playerHealthSize;
     bool inAir = false;
     Rigidbody2D rb2d;
     BoxCollider2D boxCollider;
     private float horizontalForce, verticalForce;
-    // Start is called before the first frame update
+
     void Start()
     {
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         boxY = boxCollider.size.y;
         offsetY = boxCollider.offset.y;
-        playerHealthSize = playerHealth.Length;
+        playerHealthLength = playerHealthImage.Length;
+        if(!sceneLoaded){
+            sceneLoaded = true;
+            playerHealth = playerHealthLength;
+        }else{
+            for(int i=0; i<(playerHealthLength-playerHealth); i++){
+                Destroy(playerHealthImage[(playerHealthLength-1) - i]);
+            }
+        }
     }
 
     IEnumerator PlayerDeathAnimation(){
         playerAnimator.SetBool("dead",true);
         yield return new WaitForSeconds(3);
         gameOver.EnableGameObject();
-        this.enabled = false;
     }
 
-    public void KillPlayer()
+    public void ReducePlayerHealth(bool fellDown = false)
     {
-        if(playerHealthSize!=0){
-            playerHealthSize--;
-            Destroy(playerHealth[playerHealthSize]);
+        if(playerHealth != 0){
+            playerHealth--;
+            Destroy(playerHealthImage[playerHealth]);
         }
-        if(playerHealthSize==0){
+        Debug.Log("Player Health : "+playerHealth);
+        if(playerHealth==0){
+            SoundManager.SoundInstace.Play(Sounds.PlayerCriticalHit);
+            this.enabled = false;
+            isAlive = false;
             StartCoroutine(PlayerDeathAnimation());
+            sceneLoaded = false;
+        }else{
+            SoundManager.SoundInstace.Play(Sounds.PlayerEnemyHit);
+            if(fellDown)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
@@ -66,15 +85,24 @@ public class PlayerController : MonoBehaviour
     public void PlayerMovement(){
         Vector3 playerPosition = transform.localPosition;
         if(horizontalForce != 0){
+            // SoundManager.SoundInstace.Play(Sounds.PlayerRun);
             playerPosition.x += speed * horizontalForce * Time.deltaTime;
             transform.localPosition = playerPosition;
         }
         if((verticalForce > 0) && !(inAir)){
+            SoundManager.SoundInstace.Play(Sounds.PlayerJumpUp);
             rb2d.AddForce(new Vector2(0,jump), ForceMode2D.Force);
             // rb2d.velocity = Vector2.up * jump;
             inAir = true;
         }
+    }
 
+    public int getPlayerHealth(){
+        return playerHealth;
+    }
+
+    public void setPlayerHealth(){
+        playerHealth = playerHealthLength;
     }
 
     private void PlayerAnimation()
@@ -120,6 +148,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.tag == "FloorTile"){
+            SoundManager.SoundInstace.Play(Sounds.PlayerLandDown);
             inAir = false;
         }
     }

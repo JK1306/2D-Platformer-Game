@@ -10,13 +10,16 @@ public class EnemyController : MonoBehaviour
     public float targetDistance;
     PlayerController player;
     RaycastHit2D enemyRayCast;
-    //  enemyCircle;
+    Animator enemyAnimator;
+    // bool playedAttack = false;
     GameObject rayCastObj;
     // Transform playerTransform;
     // Start is called before the first frame update
     void Start()
     {
         rayCastObj = gameObject.transform.GetChild(0).gameObject;
+        enemyAnimator = gameObject.GetComponent<Animator>();
+        enemyAnimator.SetBool("walk",true);
     }
 
     // Update is called once per frame
@@ -65,20 +68,38 @@ public class EnemyController : MonoBehaviour
 
     void EnemyMovement(){
         Vector2 enemyPosition = transform.localPosition;
+        // SoundManager.SoundInstace.Play(Sounds.ChomperWalk);
 
         if(gameObject.transform.eulerAngles.x == 0){
             enemyPosition.x += speed * Time.deltaTime;
         }else{
             enemyPosition.x -= speed * Time.deltaTime;
         }
-
         transform.localPosition = enemyPosition;
+    }
+
+    IEnumerator PlayAttackAnimation(){
+        enemyAnimator.SetBool("attack",true);
+        yield return new WaitForSeconds(0.5f);
+        enemyAnimator.SetBool("attack",false);
+        enemyAnimator.SetBool("walk",true);
     }
 
     void OnCollisionEnter2D(Collision2D collision){
         if(collision.gameObject.GetComponent<PlayerController>() != null){
             player = collision.gameObject.GetComponent<PlayerController>();
-            player.KillPlayer();
+            if(player.isAlive){
+                SoundManager.SoundInstace.Play(Sounds.ChomperAttack);
+                enemyAnimator.SetBool("walk",false);
+                StartCoroutine(PlayAttackAnimation());
+                player.ReducePlayerHealth();
+            }
         }
+    }
+
+    void OnCollisionExit2D(Collision2D collision){
+        // enemyAnimator.SetBool("walk",true);
+        // StartCoroutine(PlayAttackAnimation());
+        // enemyAnimator.SetBool("attack",false);
     }
 }

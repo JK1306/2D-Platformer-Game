@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 960527126923816816}
   - component: {fileID: 960527126923816817}
   - component: {fileID: 1988122697}
+  - component: {fileID: 539844431236195853}
   m_Layer: 9
   m_Name: Chomper
   m_TagString: Untagged
@@ -180,3 +181,22 @@ MonoBehaviour:
     m_Bits: 256
   isFacingRight: 0
   targetDistance: 0.5
+--- !u!95 &539844431236195853
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960527126923816821}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 40e5cc23a7b00d54ea6895332c861b34, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

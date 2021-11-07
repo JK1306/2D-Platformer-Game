@@ -16,6 +16,7 @@ public class LobbyController : MonoBehaviour
 
     private void LoadGameScene()
     {
+        SoundManager.SoundInstace.Play(Sounds.MenuButton);
         levelPopUp.SetActive(true);
     }
 }

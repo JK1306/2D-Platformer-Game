@@ -22,13 +22,16 @@ public class LevelLoader : MonoBehaviour
         LevelStatus levelStatus = LevelManager.Instance.GetLevelStatus(LevelName);
         switch(levelStatus){
             case LevelStatus.Locked:
+                SoundManager.SoundInstace.Play(Sounds.ButtonClickFail);
                 break;
 
             case LevelStatus.Open:
+                SoundManager.SoundInstace.Play(Sounds.ButtonClickPass);
                 SceneManager.LoadScene(LevelName);
                 break;
             
             case LevelStatus.Completed:
+                SoundManager.SoundInstace.Play(Sounds.ButtonClickPass);
                 SceneManager.LoadScene(LevelName);
                 break;
         }

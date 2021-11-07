@@ -20,10 +20,12 @@ public class GameOverController : MonoBehaviour
 
     // Update is called once per frame
     void RestartScene(){
+        SoundManager.SoundInstace.Play(Sounds.ButtonClickPass);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     void ReturnLobbySene(){
+        SoundManager.SoundInstace.Play(Sounds.MenuButton);
         SceneManager.LoadScene("LobbyScene");
     }
 }

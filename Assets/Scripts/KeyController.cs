@@ -24,6 +24,7 @@ public class KeyController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider){
         if(collider.gameObject.GetComponent<PlayerController>() != null){
+            SoundManager.SoundInstace.Play(Sounds.KeyPickUp);
             player = collider.gameObject.GetComponent<PlayerController>();
             player.addScore();
             gameObject.GetComponent<BoxCollider2D>().enabled = false;

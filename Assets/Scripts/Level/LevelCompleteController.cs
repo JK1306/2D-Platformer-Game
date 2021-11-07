@@ -16,14 +16,17 @@ public class LevelCompleteController : MonoBehaviour
     }
 
     void returnLobby(){
+        SoundManager.SoundInstace.Play(Sounds.MenuButton);
         SceneManager.LoadScene("LobbyScene");
     }
 
     void restartLevel(){
+        SoundManager.SoundInstace.Play(Sounds.ButtonClickPass);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void startNextLevel(){
+        SoundManager.SoundInstace.Play(Sounds.ButtonClickPass);
         string currentSceneName = SceneManager.GetActiveScene().name;
         string nextSceneName = LevelManager.Instance.GetNextLevel(currentSceneName);
         SceneManager.LoadScene(nextSceneName);
