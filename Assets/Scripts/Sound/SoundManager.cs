@@ -69,5 +69,6 @@ public enum Sounds{
     PlayerCriticalHit,
     ChomperWalk,
     ChomperAttack,
+    ChomperDie,
     DoorOpen
 }

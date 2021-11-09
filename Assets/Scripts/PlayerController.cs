@@ -13,7 +13,9 @@ public class PlayerController : MonoBehaviour
     public GameOverController gameOver;
     public bool isAlive = true;
     public Image[] playerHealthImage;
-    int playerHealthLength;
+    int playerHealthLength, 
+        jumpCount=0,
+        jumpThreshold=2;
     static bool sceneLoaded = false;
     static int playerHealth;
     float offsetY, boxY;
@@ -46,14 +48,19 @@ public class PlayerController : MonoBehaviour
         gameOver.EnableGameObject();
     }
 
+    IEnumerator PlayerHurtAnimation(){
+        playerAnimator.SetBool("hurt", true);
+        yield return new WaitForSeconds(0.5f);
+        playerAnimator.SetBool("hurt", false);
+    }
+
     public void ReducePlayerHealth(bool fellDown = false)
     {
         if(playerHealth != 0){
             playerHealth--;
             Destroy(playerHealthImage[playerHealth]);
         }
-        Debug.Log("Player Health : "+playerHealth);
-        if(playerHealth==0){
+        if(playerHealth == 0){
             SoundManager.SoundInstace.Play(Sounds.PlayerCriticalHit);
             this.enabled = false;
             isAlive = false;
@@ -61,24 +68,33 @@ public class PlayerController : MonoBehaviour
             sceneLoaded = false;
         }else{
             SoundManager.SoundInstace.Play(Sounds.PlayerEnemyHit);
+            Debug.Log("Play Hurt Animation");
+            StartCoroutine(PlayerHurtAnimation());
             if(fellDown)
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
-    public void addScore()
+    public void addScore(int score=10)
     {
-        score += 10;
-        scoreBoard.dispScore(score);
+        this.score += score;
+        scoreBoard.dispScore(this.score);
     }
 
     // Update is called once per frame
     void Update()
     {
         horizontalForce = Input.GetAxis("Horizontal");
-        verticalForce = Input.GetAxis("Jump");
+        if(Input.GetKeyDown(KeyCode.Space)){
+            verticalForce = Input.GetAxis("Jump");
+        }else if(Input.GetKeyUp(KeyCode.Space)){
+            verticalForce = 0;
+        }
 
         PlayerAnimation();
+    }
+
+    void FixedUpdate(){
         PlayerMovement();
     }
 
@@ -89,20 +105,18 @@ public class PlayerController : MonoBehaviour
             playerPosition.x += speed * horizontalForce * Time.deltaTime;
             transform.localPosition = playerPosition;
         }
-        if((verticalForce > 0) && !(inAir)){
+        // if((verticalForce > 0) && (!(inAir) || jumpCount < jumpThreshold)){
+        if(verticalForce > 0 && jumpCount < jumpThreshold){
+            Debug.Log("In Air : "+inAir);
+            Debug.Log("Jump Count : "+jumpCount);
             SoundManager.SoundInstace.Play(Sounds.PlayerJumpUp);
             rb2d.AddForce(new Vector2(0,jump), ForceMode2D.Force);
+            jumpCount++;
+            // verticalForce = 0;
             // rb2d.velocity = Vector2.up * jump;
             inAir = true;
         }
-    }
 
-    public int getPlayerHealth(){
-        return playerHealth;
-    }
-
-    public void setPlayerHealth(){
-        playerHealth = playerHealthLength;
     }
 
     private void PlayerAnimation()
@@ -124,7 +138,7 @@ public class PlayerController : MonoBehaviour
         if (0 < verticalForce)
         {
             if(!inAir)
-            playerAnimator.SetBool("jump", true);
+                playerAnimator.SetBool("jump", true);
         }
         else if(!inAir)
         {
@@ -150,6 +164,7 @@ public class PlayerController : MonoBehaviour
         if (coll.gameObject.tag == "FloorTile"){
             SoundManager.SoundInstace.Play(Sounds.PlayerLandDown);
             inAir = false;
+            jumpCount = 0;
         }
     }
 

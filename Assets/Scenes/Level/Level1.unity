@@ -3953,26 +3953,6 @@ PrefabInstance:
       objectReference: {fileID: 1645535946}
     - target: {fileID: 4102044833484369949, guid: 8d27c1fa128c93b43ae3df65e5d41103,
         type: 3}
-      propertyPath: playerHealth.Array.data[0]
-      value: 
-      objectReference: {fileID: 334148839}
-    - target: {fileID: 4102044833484369949, guid: 8d27c1fa128c93b43ae3df65e5d41103,
-        type: 3}
-      propertyPath: playerHealth.Array.data[1]
-      value: 
-      objectReference: {fileID: 966395658}
-    - target: {fileID: 4102044833484369949, guid: 8d27c1fa128c93b43ae3df65e5d41103,
-        type: 3}
-      propertyPath: playerHealth.Array.data[2]
-      value: 
-      objectReference: {fileID: 1889111344}
-    - target: {fileID: 4102044833484369949, guid: 8d27c1fa128c93b43ae3df65e5d41103,
-        type: 3}
-      propertyPath: playerHealthImage.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4102044833484369949, guid: 8d27c1fa128c93b43ae3df65e5d41103,
-        type: 3}
       propertyPath: playerHealthImage.Array.data[0]
       value: 
       objectReference: {fileID: 1889111344}
@@ -4046,8 +4026,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 519420029, guid: 8d27c1fa128c93b43ae3df65e5d41103, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d27c1fa128c93b43ae3df65e5d41103, type: 3}
 --- !u!1001 &8357778635855144564
 PrefabInstance:
@@ -4161,47 +4140,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8357778634778914441, guid: 1a9a21c38e918664aadbcbc8bcb866f1,
-        type: 3}
-      propertyPath: lobbyBtn
-      value: 
-      objectReference: {fileID: 8357778635855144565}
     - target: {fileID: 8357778634778914444, guid: 1a9a21c38e918664aadbcbc8bcb866f1,
         type: 3}
       propertyPath: m_Name
       value: GameOver
       objectReference: {fileID: 0}
-    - target: {fileID: 8357778634778914444, guid: 1a9a21c38e918664aadbcbc8bcb866f1,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8357778635622509026, guid: 1a9a21c38e918664aadbcbc8bcb866f1,
-        type: 3}
-      propertyPath: m_Name
-      value: LobbyBtn
-      objectReference: {fileID: 0}
-    - target: {fileID: 8357778635985440876, guid: 1a9a21c38e918664aadbcbc8bcb866f1,
-        type: 3}
-      propertyPath: m_Name
-      value: Lobby
-      objectReference: {fileID: 0}
-    - target: {fileID: 8357778635985440878, guid: 1a9a21c38e918664aadbcbc8bcb866f1,
-        type: 3}
-      propertyPath: m_text
-      value: Lobby
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a9a21c38e918664aadbcbc8bcb866f1, type: 3}
---- !u!114 &8357778635855144565 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8357778635622509036, guid: 1a9a21c38e918664aadbcbc8bcb866f1,
-    type: 3}
-  m_PrefabInstance: {fileID: 8357778635855144564}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -8,13 +8,14 @@ public class EnemyController : MonoBehaviour
     public LayerMask floorLayer;
     public bool isFacingRight = true;
     public float targetDistance;
+    public float health;
     PlayerController player;
+    bool upperHit = false;
     RaycastHit2D enemyRayCast;
     Animator enemyAnimator;
     // bool playedAttack = false;
     GameObject rayCastObj;
     // Transform playerTransform;
-    // Start is called before the first frame update
     void Start()
     {
         rayCastObj = gameObject.transform.GetChild(0).gameObject;
@@ -22,7 +23,6 @@ public class EnemyController : MonoBehaviour
         enemyAnimator.SetBool("walk",true);
     }
 
-    // Update is called once per frame
     void Update()
     {
         EnemyAnimation();
@@ -66,6 +66,19 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void reduceHealth(PlayerController playerControl){
+        if(health > 0)
+            health -= 10;
+
+        if(health <= 0){
+            this.enabled = false;
+            speed = 0f;
+            playerControl.addScore(20);
+            SoundManager.SoundInstace.Play(Sounds.ChomperDie);
+            StartCoroutine(PlayDeathAnimation());
+        }
+    }
+
     void EnemyMovement(){
         Vector2 enemyPosition = transform.localPosition;
         // SoundManager.SoundInstace.Play(Sounds.ChomperWalk);
@@ -85,8 +98,15 @@ public class EnemyController : MonoBehaviour
         enemyAnimator.SetBool("walk",true);
     }
 
+    IEnumerator PlayDeathAnimation(){
+        enemyAnimator.SetBool("death",true);
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
+    }
+
     void OnCollisionEnter2D(Collision2D collision){
-        if(collision.gameObject.GetComponent<PlayerController>() != null){
+        if(collision.gameObject.GetComponent<PlayerController>() != null && !upperHit){
+            Debug.Log("Collider Hit");
             player = collision.gameObject.GetComponent<PlayerController>();
             if(player.isAlive){
                 SoundManager.SoundInstace.Play(Sounds.ChomperAttack);
@@ -97,9 +117,18 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision){
-        // enemyAnimator.SetBool("walk",true);
-        // StartCoroutine(PlayAttackAnimation());
-        // enemyAnimator.SetBool("attack",false);
+    void OnTriggerEnter2D(Collider2D collider){
+        if(collider.gameObject.GetComponent<PlayerController>() != null){
+            upperHit = true;
+            player = collider.gameObject.GetComponent<PlayerController>();
+            reduceHealth(player);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collider){
+        if(collider.gameObject.GetComponent<PlayerController>() != null){
+            Debug.Log("player Exited");
+            upperHit = false;
+        }
     }
 }
